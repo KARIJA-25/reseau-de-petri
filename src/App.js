@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import { Button, Stack, TextField } from "@mui/material";
 
 const PLACE_RADIUS = 30;
 
@@ -201,132 +202,156 @@ function App() {
       onMouseUp={handleMouseUp}
     >
       <h1>Réseau de Petri Personnalisable</h1>
-
-      <div className="controls">
-        <button onClick={addPlace}>Ajouter Place</button>
-      </div>
-
-      <form onSubmit={addTransition} style={{ marginBottom: "10px" }}>
-        <input
-          type="text"
-          placeholder="ID transition (ex: T1)"
-          value={formTransition.id}
-          onChange={(e) =>
-            setFormTransition({ ...formTransition, id: e.target.value })
-          }
-          required
-        />
-        <input
-          type="text"
-          placeholder="Place source (ex: P1 ou P1,P2)"
-          value={formTransition.from}
-          onChange={(e) =>
-            setFormTransition({ ...formTransition, from: e.target.value })
-          }
-          required
-        />
-        <input
-          // label="Place puits"
-          value={formTransition.to}
-          type="text"
-          placeholder="Place puits (ex: P3 ou P3,P4)"
-          // value={formTransition.to}
-          onChange={(e) =>
-            setFormTransition({ ...formTransition, to: e.target.value })
-          }
-          required
-        />
-        <button type="submit">Ajouter Transition</button>
-      </form>
-      <div className="test-css">
-        <div className="place-buttons">
-          {places.map((p) => (
-            <div key={p.id} style={{ margin: "5px" }}>
-              <span>
-                {p.id} (Jetons: {p.tokens})
-              </span>
-              <button onClick={() => addToken(p.id)}>Ajouter Jeton</button>
-            </div>
-          ))}
-        </div>
-
-        <svg
-          width="900"
-          height="350"
-          style={{ border: "1px solid #ccc", margin: "20px" }}
+      <Stack direction={"column"} gap={4}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          gap={2}
+          display={"flex"}
+          alignItems="center"
+          paddingLeft={{ xs: 0, sm: 20 }}
+          paddingRight={{ xs: 0, sm: 20 }}
         >
-          <defs>
-            <marker
-              id="arrow"
-              markerWidth="10"
-              markerHeight="10"
-              refX="5"
-              refY="5"
-              orient="auto"
+          <div className="controls">
+            <button onClick={addPlace}>AJOUTER PLACE</button>
+          </div>
+          <form onSubmit={addTransition}>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              gap={2}
+              alignItems="center"
+              justifyContent="center"
             >
-              <path d="M0,0 L0,10 L10,5 Z" fill="#000" />
-            </marker>
-          </defs>
-
-          {arcs.map((arc, index) => {
-            const { start, end } = getLineCoords(arc.from, arc.to);
-            return (
-              <line
-                key={index}
-                x1={start.x}
-                y1={start.y}
-                x2={end.x}
-                y2={end.y}
-                stroke="#000"
-                strokeWidth="2"
-                markerEnd="url(#arrow)"
+              <TextField
+                label="ID transition"
+                type="text"
+                placeholder="ID transition (ex: T1)"
+                value={formTransition.id}
+                onChange={(e) =>
+                  setFormTransition({ ...formTransition, id: e.target.value })
+                }
+                required
+                size="small"
               />
-            );
-          })}
-
-          {transitions.map((t) => (
-            <rect
-              key={t.id}
-              x={t.x - 10}
-              y={t.y - 20}
-              width="20"
-              height="40"
-              fill="#34495e"
-              onMouseDown={handleMouseDown(t.id, "transition")}
-            >
-              <title>{t.id}</title>
-            </rect>
-          ))}
-
-          {places.map((p) => (
-            <g key={p.id} onMouseDown={handleMouseDown(p.id, "place")}>
-              <circle cx={p.x} cy={p.y} r={PLACE_RADIUS} fill="#f39c12" />
-              <text
-                x={p.x}
-                y={p.y + 5}
-                textAnchor="middle"
-                fontSize="20"
-                fill="#fff"
+              <TextField
+                label="Place source"
+                type="text"
+                placeholder="Place source (ex: P1 ou P1,P2)"
+                value={formTransition.from}
+                onChange={(e) =>
+                  setFormTransition({
+                    ...formTransition,
+                    from: e.target.value,
+                  })
+                }
+                required
+                size="small"
+              />
+              <TextField
+                label="Place puits"
+                value={formTransition.to}
+                type="text"
+                placeholder="Place puits (ex: P3 ou P3,P4)"
+                size="small"
+                onChange={(e) =>
+                  setFormTransition({ ...formTransition, to: e.target.value })
+                }
+                required
+              />
+              <Button type="submit" variant="contained" size="small">
+                Ajouter Transition
+              </Button>
+            </Stack>
+          </form>
+        </Stack>
+        <Stack direction={"row"} gap={1} width={"100%"}>
+          <div className="place-buttons">
+            {places.map((p) => (
+              <div key={p.id} style={{ margin: "5px" }}>
+                <span>
+                  {p.id} (Jetons: {p.tokens})
+                </span>
+                <button onClick={() => addToken(p.id)}>Ajouter Jeton</button>
+              </div>
+            ))}
+          </div>
+          <svg
+            width="56%"
+            height="360"
+            style={{ border: "1px solid #ccc", margin: "20px", float: "right" }}
+          >
+            <defs>
+              <marker
+                id="arrow"
+                markerWidth="10"
+                markerHeight="10"
+                refX="5"
+                refY="5"
+                orient="auto"
               >
-                {p.tokens}
-              </text>
-              <text
-                x={p.x}
-                y={p.y - 40}
-                textAnchor="middle"
-                fontSize="16"
-                fill="#000"
-              >
-                {p.id}
-              </text>
-            </g>
-          ))}
+                <path d="M0,0 L0,10 L10,5 Z" fill="#000" />
+              </marker>
+            </defs>
 
-          {tokens.map((t) => (
-            <circle key={t.id} cx={t.x} cy={t.y} r="8" fill="red" />
-          ))}
-        </svg>
-      </div>
+            {arcs.map((arc, index) => {
+              const { start, end } = getLineCoords(arc.from, arc.to);
+              return (
+                <line
+                  key={index}
+                  x1={start.x}
+                  y1={start.y}
+                  x2={end.x}
+                  y2={end.y}
+                  stroke="#000"
+                  strokeWidth="2"
+                  markerEnd="url(#arrow)"
+                />
+              );
+            })}
+
+            {transitions.map((t) => (
+              <rect
+                key={t.id}
+                x={t.x - 10}
+                y={t.y - 20}
+                width="20"
+                height="40"
+                fill="#34495e"
+                onMouseDown={handleMouseDown(t.id, "transition")}
+              >
+                <title>{t.id}</title>
+              </rect>
+            ))}
+
+            {places.map((p) => (
+              <g key={p.id} onMouseDown={handleMouseDown(p.id, "place")}>
+                <circle cx={p.x} cy={p.y} r={PLACE_RADIUS} fill="#f39c12" />
+                <text
+                  x={p.x}
+                  y={p.y + 5}
+                  textAnchor="middle"
+                  fontSize="20"
+                  fill="#fff"
+                >
+                  {p.tokens}
+                </text>
+                <text
+                  x={p.x}
+                  y={p.y - 40}
+                  textAnchor="middle"
+                  fontSize="16"
+                  fill="#000"
+                >
+                  {p.id}
+                </text>
+              </g>
+            ))}
+
+            {tokens.map((t) => (
+              <circle key={t.id} cx={t.x} cy={t.y} r="8" fill="red" />
+            ))}
+          </svg>
+        </Stack>
+      </Stack>
 
       <div className="buttons">
         {transitions.map((t) => (

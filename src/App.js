@@ -202,10 +202,10 @@ function App() {
       onMouseUp={handleMouseUp}
     >
       <h1>Réseau de Petri Personnalisable</h1>
-      <Stack direction={"column"} gap={4}>
+      <Stack direction={"column"} gap={1}>
         <Stack
           direction={{ xs: "column", sm: "row" }}
-          gap={2}
+          gap={1}
           display={"flex"}
           alignItems="center"
           paddingLeft={{ xs: 0, sm: 20 }}

@@ -226,9 +226,11 @@ function App() {
           required
         />
         <input
-          type="text"
-          placeholder="Place destination (ex: P3 ou P3,P4)"
+          // label="Place puits"
           value={formTransition.to}
+          type="text"
+          placeholder="Place puits (ex: P3 ou P3,P4)"
+          // value={formTransition.to}
           onChange={(e) =>
             setFormTransition({ ...formTransition, to: e.target.value })
           }

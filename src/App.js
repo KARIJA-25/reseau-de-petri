@@ -3,65 +3,65 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Button, Stack, TextField } from "@mui/material";
 const PLACE_RADIUS = 30;
-// Votre réseau de Petri préconfiguré
-const INITIAL_PETRI_NET = {
-  places: [
-    { id: "P0", label: "Entrée électeur", x: 100, y: 150, tokens: 1 },
-    { id: "P1", label: "En vérification", x: 250, y: 150, tokens: 0 },
-    { id: "P2", label: "Autorisé à voter", x: 400, y: 100, tokens: 0 },
-    { id: "P3", label: "Refusé / Sortie", x: 400, y: 200, tokens: 0 },
-    { id: "P4", label: "A pris le bulletin", x: 550, y: 150, tokens: 0 },
-    { id: "P5", label: "A voté", x: 700, y: 150, tokens: 0 },
-    { id: "P6", label: "A signé / Sortie", x: 850, y: 150, tokens: 0 },
-  ],
-  transitions: [
-    {
-      id: "T1",
-      label: "Vérifier droit de vote",
-      x: 175,
-      y: 150,
-      from: "P0",
-      to: "P1",
-    },
-    { id: "T2a", label: "Refusé", x: 325, y: 200, from: "P1", to: "P3" },
-    { id: "T2b", label: "Autorisé", x: 325, y: 100, from: "P1", to: "P2" },
-    {
-      id: "T3",
-      label: "Prendre bulletin",
-      x: 475,
-      y: 150,
-      from: "P2",
-      to: "P4",
-    },
-    { id: "T4", label: "Voter", x: 625, y: 150, from: "P4", to: "P5" },
-    {
-      id: "T5",
-      label: "Signer et sortir",
-      x: 775,
-      y: 150,
-      from: "P5",
-      to: "P6",
-    },
-  ],
-  arcs: [
-    { from: "P0", to: "T1" },
-    { from: "T1", to: "P1" },
-    { from: "P1", to: "T2a" },
-    { from: "P1", to: "T2b" },
-    { from: "T2a", to: "P3" },
-    { from: "T2b", to: "P2" },
-    { from: "P2", to: "T3" },
-    { from: "T3", to: "P4" },
-    { from: "P4", to: "T4" },
-    { from: "T4", to: "P5" },
-    { from: "P5", to: "T5" },
-    { from: "T5", to: "P6" },
-  ],
-};
+// // Votre réseau de Petri préconfiguré
+// const INITIAL_PETRI_NET = {
+//   places: [
+//     { id: "P0", label: "Entrée électeur", x: 100, y: 150, tokens: 1 },
+//     { id: "P1", label: "En vérification", x: 250, y: 150, tokens: 0 },
+//     { id: "P2", label: "Autorisé à voter", x: 400, y: 100, tokens: 0 },
+//     { id: "P3", label: "Refusé / Sortie", x: 400, y: 200, tokens: 0 },
+//     { id: "P4", label: "A pris le bulletin", x: 550, y: 150, tokens: 0 },
+//     { id: "P5", label: "A voté", x: 700, y: 150, tokens: 0 },
+//     { id: "P6", label: "A signé / Sortie", x: 850, y: 150, tokens: 0 },
+//   ],
+//   transitions: [
+//     {
+//       id: "T1",
+//       label: "Vérifier droit de vote",
+//       x: 175,
+//       y: 150,
+//       from: "P0",
+//       to: "P1",
+//     },
+//     { id: "T2a", label: "Refusé", x: 325, y: 200, from: "P1", to: "P3" },
+//     { id: "T2b", label: "Autorisé", x: 325, y: 100, from: "P1", to: "P2" },
+//     {
+//       id: "T3",
+//       label: "Prendre bulletin",
+//       x: 475,
+//       y: 150,
+//       from: "P2",
+//       to: "P4",
+//     },
+//     { id: "T4", label: "Voter", x: 625, y: 150, from: "P4", to: "P5" },
+//     {
+//       id: "T5",
+//       label: "Signer et sortir",
+//       x: 775,
+//       y: 150,
+//       from: "P5",
+//       to: "P6",
+//     },
+//   ],
+//   arcs: [
+//     { from: "P0", to: "T1" },
+//     { from: "T1", to: "P1" },
+//     { from: "P1", to: "T2a" },
+//     { from: "P1", to: "T2b" },
+//     { from: "T2a", to: "P3" },
+//     { from: "T2b", to: "P2" },
+//     { from: "P2", to: "T3" },
+//     { from: "T3", to: "P4" },
+//     { from: "P4", to: "T4" },
+//     { from: "T4", to: "P5" },
+//     { from: "P5", to: "T5" },
+//     { from: "T5", to: "P6" },
+//   ],
+// };
 function App() {
-  const [places, setPlaces] = useState(INITIAL_PETRI_NET.places);
-  const [transitions, setTransitions] = useState(INITIAL_PETRI_NET.transitions);
-  const [arcs, setArcs] = useState(INITIAL_PETRI_NET.arcs);
+  const [places, setPlaces] = useState([]);
+  const [transitions, setTransitions] = useState([]);
+  const [arcs, setArcs] = useState([]);
   const [tokens, setTokens] = useState([]);
   const [dragItem, setDragItem] = useState(null);
   const [tokenId, setTokenId] = useState(0);

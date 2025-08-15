@@ -1,8 +1,8 @@
-// import "./App.css";
-// import React, { useState, useEffect } from "react";
-// import "./App.css";
-// import { Button, Stack, TextField } from "@mui/material";
-// const PLACE_RADIUS = 30;
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import { Button, Stack, TextField } from "@mui/material";
+const PLACE_RADIUS = 30;
 // // Votre réseau de Petri préconfiguré
 // const INITIAL_PETRI_NET = {
 //   places: [
@@ -58,13 +58,13 @@
 //     { from: "T5", to: "P6" },
 //   ],
 // };
-// function App() {
-//   const [places, setPlaces] = useState(INITIAL_PETRI_NET.places);
-//   const [transitions, setTransitions] = useState(INITIAL_PETRI_NET.transitions);
-//   const [arcs, setArcs] = useState(INITIAL_PETRI_NET.arcs);
-//   const [tokens, setTokens] = useState([]);
-//   const [dragItem, setDragItem] = useState(null);
-//   const [tokenId, setTokenId] = useState(0);
+function App() {
+  const [places, setPlaces] = useState([]);
+  const [transitions, setTransitions] = useState([]);
+  const [arcs, setArcs] = useState([]);
+  const [tokens, setTokens] = useState([]);
+  const [dragItem, setDragItem] = useState(null);
+  const [tokenId, setTokenId] = useState(0);
 
 //   const [formTransition, setFormTransition] = useState({
 //     id: "",
